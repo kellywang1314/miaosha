@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ajax的应用</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <label>用户名：<input id="user" type="text" name="user"></label>
+    <div id="myDiv"></div>
+    <script type="text/javascript">
+    //创建xmlhttp对象
+    var xmlhttp=null;
+    if (window.XMLHttpRequest)
+    {
+    //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+    xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+    // IE6, IE5 浏览器执行代码
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    //发送请求
+    xmlhttp.open('GET','http://localhost/miaosha/buy.php',true);
+    xmlhttp.send();
+    
+    //创建监视函数
+    xmlhttp.onreadystatechange=function()
+    {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+      //获得服务器端的json数据，为了访问其中的每一个key,把他转化为对象形式。
+      var jsonText = xmlhttp.responseText;
+      console.log(jsonText);
+      var returnValue = eval("(" + jsonText + ")");
+      console.log(returnValue.errno);
+    //document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+    }
+    </script>
+  </body>
+</html>
